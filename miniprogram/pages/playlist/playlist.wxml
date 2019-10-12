@@ -1,0 +1,14 @@
+<swiper 
+  indicator-dots="true" 
+  autoplay="true"
+  interval="3000"
+  duration="1000"
+  indicator-active-color="#d43c43">
+  <block wx:for="{{ swiperImgUrls }}">
+    <swiper-item>
+      <image 
+        class="swiper-img"
+        src="{{ item.url }}"></image>
+    </swiper-item>
+  </block>
+</swiper>
