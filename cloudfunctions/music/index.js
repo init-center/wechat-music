@@ -18,6 +18,8 @@ exports.main = async (event, context) => {
   const app = new tcbRouter({ event })
 
   //和koa的路由类似的语法，同样，返回数据也是使用ctx.body
+
+  //请求歌单列表
   app.router('playlist', async (ctx, next) => {
     ctx.body = await cloud.database().collection('playlist')
       .skip(event.start)
@@ -27,8 +29,14 @@ exports.main = async (event, context) => {
       .then(res => res)
   })
 
+  //情趣某个歌单的音乐列表
   app.router('musiclist', async (ctx, next) => {
     ctx.body = await rp(BASEURL + '/playlist/detail?id=' + event.playlistId).then(res => JSON.parse(res))
+  })
+
+  //请求音乐资源
+  app.router('musicUrl', async (ctx, next) => {
+    ctx.body = await rp(BASEURL + '/song/url?id=' + event.musicId).then(res => res)
   })
 
   //tcb-router需要在最后使用app.serve()返回服务
