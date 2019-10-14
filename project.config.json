@@ -29,13 +29,25 @@
 		"game": {
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
 			"current": 0,
 			"list": [
 				{
 					"id": -1,
 					"name": "db guide",
-					"pathName": "pages/databaseGuide/databaseGuide"
+					"pathName": "pages/databaseGuide/databaseGuide",
+					"query": ""
+				},
+				{
+					"id": 1,
+					"name": "pages/musiclist/musiclist",
+					"pathName": "pages/musiclist/musiclist",
+					"query": "playlistId=2819914042",
+					"scene": null
 				}
 			]
 		}

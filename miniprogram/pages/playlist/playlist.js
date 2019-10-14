@@ -86,7 +86,7 @@ Page({
   //调用云函数获取歌单
   _getPlaylist() {
     wx.showLoading({
-      title: '加载中...',
+      title: '加载中',
     })
     //通过callFunction调用云函数
     //参数是个对象，name是调用的函数名称，data传参
