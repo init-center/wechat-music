@@ -13,6 +13,16 @@ App({
       })
     }
     //全局属性定义
-    this.globalData = {}
+    this.globalData = {
+      playingMusicId: -1,
+    }
+  },
+  //设置当前播放的音乐id
+  setPlayingMusicId(musicId) {
+    this.globalData.playingMusicId = musicId
+  },
+  //获取当期播放的音乐id
+  getPlayingMusicId() {
+    return this.globalData.playingMusicId
   }
 })

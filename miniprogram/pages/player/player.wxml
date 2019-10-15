@@ -4,15 +4,27 @@
 <!-- 歌曲信息 -->
 <view class="player-info">
   <!-- 封面 -->
-  <view class="player-disc {{ isPlaying ? 'play' : '' }}">
+  <view class="player-disc {{ isPlaying ? 'play' : '' }}" bind:tap="onChangeLyricShow" hidden="{{ isLyricShow }}">
    <image 
     class="player-image rotating {{ isPlaying ? '' : 'rotating-paused' }}" 
     src="{{ picUrl }}"></image>
   </view>
 
+  <!-- 歌词组件 -->
+  <lyric 
+    class="lyric"
+    isLyricShow="{{ isLyricShow }}" 
+    bind:tap="onChangeLyricShow"
+    lyric="{{ lyric }}"/>
+
   <!-- 播放进度条 -->
   <view class="progress-bar">
-    <process-bar bind:musicEnd="onNextMusic"/>
+    <process-bar 
+      isSameMusic="{{ isSameMusic }}"
+      bind:musicEnd="onNextMusic" 
+      bind:timeUpdate="timeUpdate"
+      bind:musicPlay="onPlay"
+      bind:musicPause="onPause"/>
   </view>
 
   <!-- 控制面板 -->

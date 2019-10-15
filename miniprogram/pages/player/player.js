@@ -1,3 +1,5 @@
+//获取全局的App实例以获取全局属性
+const app = getApp()
 
 //获取全局唯一的背景音频管理器
 const backgroundAudioManager = wx.getBackgroundAudioManager()
@@ -12,7 +14,10 @@ Page({
    */
   data: {
     picUrl: '',
-    isPlaying: false
+    isPlaying: false,
+    isLyricShow: false,
+    lyric: '暂无歌词',
+    isSameMusic: false  //进入时是否是同一首歌
   },
 
   /**
@@ -23,10 +28,36 @@ Page({
     musiclist = wx.getStorageSync('musiclist')
     this._loadMusicDetail(options.musicId)
   },
-  
+  //控制歌词是否显示
+  onChangeLyricShow() {
+    this.setData({
+      isLyricShow: !this.data.isLyricShow
+    })
+  },
+  //播放时间更新，以联动歌词
+  timeUpdate(event) {
+    this.selectComponent('.lyric').update(event.detail.currentTime)
+  },
+  //加载音乐
   _loadMusicDetail(musicId) {
-    backgroundAudioManager.stop()
+    //判断是不是同一首歌
+    if(musicId == app.getPlayingMusicId()) {
+      this.setData({
+        isSameMusic: true
+      })
+    } else {
+      this.setData({
+        isSameMusic: false
+      })
+    }
+
     const music = musiclist[nowPlayingIndex]
+    //如果不是同一首歌才stop
+    if(!this.data.isSameMusic) {
+      backgroundAudioManager.stop()
+    }
+    
+    
     wx.setNavigationBarTitle({
       title: music.name,
     })
@@ -35,9 +66,8 @@ Page({
       isPlaying: false
     })
 
-    wx.showLoading({
-      title: '歌曲正在缓冲',
-    })
+    //将当前播放的音乐id设置到全局属性中
+    app.setPlayingMusicId(musicId)
 
     //获取音乐地址
     wx.cloud.callFunction({
@@ -48,17 +78,55 @@ Page({
         }
     }).then(res => {
       const result = JSON.parse(res.result)
-      //设置背景音频播放的内容
-      backgroundAudioManager.src = result.data[0].url
-      backgroundAudioManager.title = music.name
-      backgroundAudioManager.coverImgUrl = music.al.picUrl
-      backgroundAudioManager.singer = music.ar[0].name
-      backgroundAudioManager.epname = music.al.name
+
+      //如果url等于null，歌曲为vip专享或者其他原因
+      if(result.data[0].url == null) {
+        wx.showToast({
+          title: '无权限播放'
+        })
+        setTimeout(() => {
+          wx.showToast({
+            title: '跳转下一首'
+          })
+          //自动跳转到下一首
+          this.onNextMusic()
+        }, 2000)
+        return
+      }
+      //不是同一首歌才重新设置
+      if(!this.data.isSameMusic) {
+        //设置背景音频播放的内容
+        backgroundAudioManager.src = result.data[0].url
+        backgroundAudioManager.title = music.name
+        backgroundAudioManager.coverImgUrl = music.al.picUrl
+        backgroundAudioManager.singer = music.ar[0].name
+        backgroundAudioManager.epname = music.al.name
+      }
+      
       //当内容设置完成后，表明音乐已经播放，设置isPlaying的值为true
       this.setData({
         isPlaying: true
       })
       wx.hideLoading()
+
+      //音乐播放后再加载歌词
+      wx.cloud.callFunction({
+        name: "music",
+        data: {
+          $url: "lyric",
+          musicId
+        }
+      }).then(res => {
+        let lyric = '暂无歌词'
+        const lrc = JSON.parse(res.result).lrc
+        if(lrc) {
+          lyric = lrc.lyric
+        }
+        this.setData({
+          lyric
+        })
+
+      })
     })
   },
 
@@ -71,6 +139,17 @@ Page({
     }
     this.setData({
       isPlaying: !this.data.isPlaying
+    })
+  },
+  //联动控制
+  onPlay() {
+    this.setData({
+      isPlaying: true
+    })
+  },
+  onPause() {
+    this.setData({
+      isPlaying: false
     })
   },
   //上一首

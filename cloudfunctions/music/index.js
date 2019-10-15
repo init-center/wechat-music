@@ -29,7 +29,7 @@ exports.main = async (event, context) => {
       .then(res => res)
   })
 
-  //情趣某个歌单的音乐列表
+  //请求某个歌单的音乐列表
   app.router('musiclist', async (ctx, next) => {
     ctx.body = await rp(BASEURL + '/playlist/detail?id=' + event.playlistId).then(res => JSON.parse(res))
   })
@@ -37,6 +37,11 @@ exports.main = async (event, context) => {
   //请求音乐资源
   app.router('musicUrl', async (ctx, next) => {
     ctx.body = await rp(BASEURL + '/song/url?id=' + event.musicId).then(res => res)
+  })
+
+  //请求歌词
+  app.router('lyric', async (ctx, next) => {
+    ctx.body = await rp(BASEURL + '/lyric?id=' + event.musicId).then(res => res)
   })
 
   //tcb-router需要在最后使用app.serve()返回服务

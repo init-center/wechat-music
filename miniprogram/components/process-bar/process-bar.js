@@ -17,7 +17,7 @@ Component({
    * 组件的属性列表
    */
   properties: {
-
+    isSameMusic: Boolean
   },
 
   /**
@@ -34,6 +34,11 @@ Component({
   //生命周期
   lifetimes: {
     ready() {
+      //如果是同一首歌，需要判断重新设置一下totalTime，才能使duration不为默认值
+      if(this.properties.isSameMusic && this.data.showTime.totalTime == '00:00') {
+        this._setTime()
+      }
+      
       this._getMovableDis()
       this._bindBGMEvent()
     }
@@ -87,12 +92,17 @@ Component({
         //从而导致进度不会移动
         //因为在手动跳转位置后会重新触发play事件播放，所以在这个生命周期中我们需要将isMoving设置为false,这样才会使音乐播放时滑动标记isMoving为false
         isMoving = false
+
+        //联动控制
+        this.triggerEvent('musicPlay')
       })
       //停止播放
       backgroundAudioManager.onStop(() => {
       })
       //暂停播放
       backgroundAudioManager.onPause(() => {
+        //联动控制
+        this.triggerEvent('musicPause')
       })
       //加载中
       backgroundAudioManager.onWaiting(() => {
@@ -129,6 +139,9 @@ Component({
           })
           //最后要同步更新播放秒数，以便于下次比较
           currentSecondTime = currentSec
+
+          //将当前播放时间传出以联动歌词
+          this.triggerEvent('timeUpdate', { currentTime })
         }
         
       })
