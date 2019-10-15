@@ -32,12 +32,12 @@ exports.main = async (event, context) => {
   }
 
   //新建一个对象来合并分批抓取的对象
-  const list = {
+  let list = {
     data: []
   }
   if(tasks.length > 0) {
     //开始合并
-    list = (await promise.all(tasks)).reduce((acc, cur) => {
+    list = (await Promise.all(tasks)).reduce((acc, cur) => {
       return {
         data: acc.data.concat(cur)
       }

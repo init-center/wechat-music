@@ -1,22 +1,30 @@
 <view class="player-container" style="background:url({{ picUrl }}) center/cover no-repeat"></view>
 <view class="player-mask"></view>
 
+<!-- 歌曲信息 -->
 <view class="player-info">
+  <!-- 封面 -->
   <view class="player-disc {{ isPlaying ? 'play' : '' }}">
    <image 
     class="player-image rotating {{ isPlaying ? '' : 'rotating-paused' }}" 
     src="{{ picUrl }}"></image>
   </view>
-</view>
 
-<view class="control">
-  <text 
-    class="iconfont icon-pre"
-    bind:tap="onPreMusic"></text>
-  <text 
-    class="iconfont {{ isPlaying ? 'icon-pause' : 'icon-play' }}"
-    bind:tap="togglePlaying"></text>
-  <text 
-    class="iconfont icon-next"
-    bind:tap="onNextMusic"></text>
+  <!-- 播放进度条 -->
+  <view class="progress-bar">
+    <process-bar bind:musicEnd="onNextMusic"/>
+  </view>
+
+  <!-- 控制面板 -->
+  <view class="control">
+    <text 
+      class="iconfont icon-pre"
+      bind:tap="onPreMusic"></text>
+    <text 
+      class="iconfont {{ isPlaying ? 'icon-pause' : 'icon-play' }}"
+      bind:tap="togglePlaying"></text>
+    <text 
+      class="iconfont icon-next"
+      bind:tap="onNextMusic"></text>
+  </view>
 </view>
