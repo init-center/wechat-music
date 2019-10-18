@@ -1,0 +1,35 @@
+.tab-item {
+  background-color: #f1f1f1;
+  padding: 10rpx 0;
+}
+
+.comment {
+  margin-bottom: 40rpx;
+  padding-left: 10rpx;
+}
+
+.comment-title {
+  display: flex;
+}
+
+.comment-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.comment-nickname {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}
+
+.comment-content {
+  margin: 20rpx 0;
+}
+
+.comment-time {
+  font-size: 24rpx;
+  color: #999;
+}

@@ -1,2 +1,36 @@
-<!--miniprogram/pages/blog/blog.wxml-->
-<text>miniprogram/pages/blog/blog.wxml</text>
+<view class="blog-container">
+  <view class="blog-header">
+    <view class="publish-container" bind:tap="onPublish">
+      <i class="iconfont icon-publish"></i>
+    </view>
+    <view class="search-container">
+      <search 
+        iconfont="iconfont" 
+        icon-search="icon-search"
+        bind:search="onSearch"/>
+    </view>
+  </view>
+
+  <!-- 博客列表 -->
+  <view class="blog-list">
+    <block wx:for="{{ blogList }}" wx:key="_id">
+      <view class="blog-panel">
+        <blog-card 
+          blog="{{ item }}"
+          bind:tap="goComment"
+          data-blogid="{{ item._id }}"/>
+        <blog-ctrl
+          iconfont="iconfont"
+          icon-comment="icon-comment"
+          icon-share="icon-share"
+          blogId="{{ item._id }}"
+          blog="{{ item }}"/>
+      </view>
+    </block>
+  </view>
+
+  <login 
+    isModalShow="{{ isModalShow }}"
+    bind:loginSuccess="onLoginSuccess"
+    bind:loginFail="onLoginFail"/>
+</view>

@@ -1,0 +1,11 @@
+<view class="search-container">
+  <i class="iconfont icon-search icon-search-in"></i>
+  <input 
+    class="search-input"
+    placeholder="{{ placeholder }}"
+    placeholder-class="search-input-placeholder"
+    bindinput="onInputChange"></input>
+  <button 
+    class="search-btn"
+    bind:tap="onSearch">搜索</button>
+</view>

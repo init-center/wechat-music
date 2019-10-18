@@ -1,0 +1,51 @@
+page {
+  background-color: #f1f1f1;
+}
+
+.blog-card {
+  padding: 20rpx;
+  background-color: #fff;
+}
+
+.blog-card-title {
+  display: flex;
+}
+
+.blog-card-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.blog-card-nickname {
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.blog-card-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.blog-card-content {
+  font-size: 30rpx;
+  margin: 20rpx 0;
+}
+
+.blog-card-image-box {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+
+.blog-card-image {
+  width: 230rpx;
+  height: 230rpx;
+  margin-right: 10rpx;
+  margin-bottom: 10rpx;
+}
+
+.blog-card-image:nth-child(3n) {
+  margin-right: 0
+}
