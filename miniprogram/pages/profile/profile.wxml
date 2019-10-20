@@ -23,10 +23,10 @@
   </view>
 
   <view class="nav-item">
-    <navigator class="content">
+    <view class="content" bind:tap="onTapQrCode">
       <i class="iconfont icon-qrcode"></i>
       <text class="text">小程序码</text>
       <i class="iconfont icon-right"></i>
-    </navigator>
+    </view>
   </view>
 </view>
