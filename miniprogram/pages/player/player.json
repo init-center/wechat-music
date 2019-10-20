@@ -2,5 +2,6 @@
   "usingComponents": {
     "process-bar": "/components/process-bar/process-bar",
     "lyric": "/components/lyric/lyric"
-  }
+  },
+  "disableScroll": true
 }

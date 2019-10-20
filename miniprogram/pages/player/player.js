@@ -101,6 +101,9 @@ Page({
         backgroundAudioManager.coverImgUrl = music.al.picUrl
         backgroundAudioManager.singer = music.ar[0].name
         backgroundAudioManager.epname = music.al.name
+
+        //保存播放歌曲到历史记录之中
+        this.savePlayHistory()
       }
       
       //当内容设置完成后，表明音乐已经播放，设置isPlaying的值为true
@@ -170,6 +173,28 @@ Page({
       nowPlayingIndex = 0
     }
     this._loadMusicDetail(musiclist[nowPlayingIndex].id)
+  },
+
+  //保存播放历史
+  savePlayHistory() {
+    //获取当前播放的歌曲
+    const currentMusic = musiclist[nowPlayingIndex]
+    //通过全局属性获取到当前openid并获取到该id的播放历史
+    const openId = app.globalData.openId
+    const historyList = wx.getStorageSync(openId)
+    //判断当前播放的歌曲是否在历史里
+    for(let i = 0, len = historyList.length; i < len; ++i) {
+      //如果已经存在则把这条记录删掉
+      if(historyList[i].id === currentMusic.id) {
+        historyList.splice(i, 1)
+        break
+      }
+    }
+
+    //如果是不存在则直接插入前面即可，如果存在的话在前面已经删掉了，
+    //所以也直接插入即可
+    historyList.unshift(currentMusic)
+    wx.setStorageSync(openId, historyList)
   },
 
   /**

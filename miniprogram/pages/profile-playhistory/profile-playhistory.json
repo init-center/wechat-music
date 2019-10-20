@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "musiclistContent": "/components/musiclistContent/musiclistContent"
+  },
+  "navigationBarTitleText": "最近播放"
+}
