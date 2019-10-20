@@ -6,6 +6,9 @@ cloud.init()
 //引入tcb-router
 const TcbRouter = require('tcb-router')
 
+//获取微信上下文
+const wxContext = cloud.getWXContext()
+
 //获取云数据库
 const db = cloud.database()
 
@@ -86,6 +89,19 @@ exports.main = async (event, context) => {
       detail,
       commentList
     }
+  })
+
+
+  //我的发现
+  app.router('getMyBlog', async (ctx, next) => {
+    ctx.body = await blogCollection.where({
+      _openid: wxContext.OPENID
+    })
+    .skip(event.start)
+    .limit(event.count)
+    .orderBy('createTime', 'desc')
+    .get()
+    .then(res => res.data)
   })
 
   return app.serve()
