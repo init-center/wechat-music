@@ -1,12 +1,27 @@
-# 云开发 quickstart
+# 一个音乐微信小程序
 
-这是云开发的快速启动指引，其中演示了如何上手使用云开发的三大基础能力：
+- 使用原生方式开发
+- 实现了主页、播放、发现、我的 等页面
+- 组件化开发，对歌曲列表、进度条、博客卡片、博客控制等进行组件拆分
+- 使用了小程序云开发
 
-- 数据库：一个既可在小程序前端操作，也能在云函数中读写的 JSON 文档型数据库
-- 文件存储：在小程序前端直接上传/下载云端文件，在云开发控制台可视化管理
-- 云函数：在云端运行的代码，微信私有协议天然鉴权，开发者只需编写业务逻辑代码
 
-## 参考文档
 
-- [云开发文档](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html)
+## 截图
+
+主页：
+
+![index.jpg](https://i.loli.net/2019/10/21/7m8BNrd2tpAnQuC.jpg)
+
+
+
+播放列表：
+
+![musiclist.jpg](https://i.loli.net/2019/10/21/pjZU18CmwlBVELc.jpg)
+
+
+
+播放器：
+
+![player.jpg](https://i.loli.net/2019/10/21/VliA3QetvwaXYI8.jpg)
 
